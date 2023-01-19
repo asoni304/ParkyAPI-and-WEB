@@ -8,7 +8,7 @@ Prerequisites
     An internet connection
     
  Clone the repository to your local machine.
-   git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+   git clone https://github.com/asoni304/ParkyAPI-and-WEB
 
  Open the solution file NationalParksAndTrails.sln in Visual Studio.
 
@@ -51,6 +51,7 @@ Built With
     JSON Web Tokens
     React
     Bootstrap
+    Sql Server Database
 
 Author
 
