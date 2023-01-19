@@ -1,0 +1,60 @@
+﻿var dataTable;
+
+$(document).ready(function () {
+    loadDataTable();
+});
+
+function loadDataTable() {
+    dataTable = $('#tblData').DataTable({
+        "ajax": {
+            "url": "/trails/GetAllTrails",
+            "type": "GET",
+            "datatype": "json"
+        },
+        "columns": [
+            { "data": "nationalParkId", "width": "25%" },
+            { "data": "name", "width": "20%" },
+            { "data": "distance", "width": "15%" },
+            { "data": "elevation", "width": "15%" },
+            {
+                "data": "id",
+                "render": function (data) {
+                    return `<div class="text-center">
+                                <a href="/trails/Upsert/${data}" class='btn btn-success text-white'
+                                    style='cursor:pointer;'> <i class='far fa-edit'></i></a>
+                                    &nbsp;
+                                <a onclick=Delete("/trails/Delete/${data}") class='btn btn-danger text-white'
+                                    style='cursor:pointer;'> <i class='far fa-trash-alt'></i></a>
+                                </div>
+                            `;
+                }, "width": "30%"
+            }
+        ]
+    });
+}
+
+function Delete(url) {
+    swal({
+        title: "are you sure you want to delete?",
+        text: "you will not be able to restore the data!",
+        icon: "warning",
+        buttons: true,
+        dangermode: true
+    }).then((willdelete) => {
+        if (willdelete) {
+            $.ajax({
+                type: 'delete',
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        datatable.ajax.reload();
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
+                }
+            });
+        }
+    });
+}
